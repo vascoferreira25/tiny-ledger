@@ -6,6 +6,12 @@ Content-Type: application/json
   "startingBalance": "100"
 }
 
-###
+### Try to create an account with -100 of balance
+POST http://localhost:8080/api/v1/account
+Content-Type: application/json
+
+{
+  "startingBalance": "-100"
+}
 
 

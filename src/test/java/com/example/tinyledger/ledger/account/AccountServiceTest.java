@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -56,6 +56,8 @@ class AccountServiceTest {
         AccountResponse response = accountService.createAccount(newAccount);
 
         // Then
+        verify(accountRepository, times(1)).save(any());
+
         assertThat(response.getId())
                 .isNotNull();
 

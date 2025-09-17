@@ -8,6 +8,7 @@ public class Account {
     private BigDecimal balance;
 
     public Account() {
+        this.balance = BigDecimal.ZERO;
     }
 
     public Long getId() {
