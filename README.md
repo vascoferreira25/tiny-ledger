@@ -62,6 +62,8 @@ of your choice - e.g. Bruno or HTTPie for open source options or Postman.
 `.http` files in the `/docs/http` directory to execute requests.
 - This project will use Java and Spring Boot.
 - As specified in the technical requirements, a Map will be used to store data.
+- As it was not specified, balance cannot be negative and when creating an account
+the balance must be non-negative.
 
 ## Running the application
 
