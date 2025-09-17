@@ -43,11 +43,11 @@ application as well as a few examples of how to execute the implemented features
 - Authentication and authorisation won't be implemented
 - It will exist some logged information for debugging purposes but monitoring won't be
 implemented
-- Transactions/atomic operations won't be implemented therefore, concurrent operations
+- Transactions/atomic operations won't be implemented, therefore concurrent operations
 to the same account might cause issues when updating the balance.
-- For the sake of coherence, there will be multiple accounts and multiple transactions.
-This way, the implementation of both repositories (Account and Transaction) will be very
-similar.
+- As there will be multiple transactions, for the sake of coherence, there will also be
+multiple accounts. This way, the implementation of both repositories (Account and 
+Transaction) will be very similar, thus making the code more easily maintainable.
 - As the functional requirements about transactions don't specify how many types of 
 transactions should exist (e.g. between multiple accounts), only two types will be
 implemented: Deposits and Withdrawals.
