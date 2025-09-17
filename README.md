@@ -64,6 +64,8 @@ of your choice - e.g. Bruno or HTTPie for open source options or Postman.
 - As specified in the technical requirements, a Map will be used to store data.
 - As it was not specified, balance cannot be negative and when creating an account
 the balance must be non-negative.
+- As the currency was not specified, neither the accounts nor the transactions 
+will have a currency.
 
 ## Running the application
 
