@@ -66,6 +66,12 @@ of your choice - e.g. Bruno or HTTPie for open source options or Postman.
 the balance must be non-negative.
 - As the currency was not specified, neither the accounts nor the transactions 
 will have a currency.
+- For simplicity's sake, transaction types will be an Enum. In a more complex
+environment it could be an Entity to allow for the creation of more types on runtime.
+- The transactions endpoints will be associated in the Account controller as they
+won't be changed independently.
+- The amount in the transactions must always be positive and have a type of either
+DEPOSIT or WITHDRAWAL.
 
 ## Running the application
 

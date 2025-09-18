@@ -20,3 +20,24 @@ Content-Type: application/json
 GET http://localhost:8080/api/v1/account/{{accountId}}/balance
 Accept: application/json
 
+### Check transaction history
+GET http://localhost:8080/api/v1/account/{{accountId}}/transaction
+Accept: application/json
+
+### Create new transaction, deposit of 100
+POST http://localhost:8080/api/v1/account/{{accountId}}/transaction
+Content-Type: application/json
+
+{
+  "amount": "100.1",
+  "type": "DEPOSIT"
+}
+
+### Create new transaction, withdrawal of 100
+POST http://localhost:8080/api/v1/account/{{accountId}}/transaction
+Content-Type: application/json
+
+{
+  "amount": "100",
+  "type": "WITHDRAWAL"
+}
