@@ -81,7 +81,7 @@ Use the following command to build the application:
 ./mvnw package -DskipTests
 ```
 
-**Note**: This command will skip test to make it faster to build the jar file, if you
+**Note**: This command will skip tests to make it faster to build the jar file, if you
 wish to check the tests remove the `-DskipTests` argument.
 
 Then, to run the application, change the current working directory to the target directory
@@ -96,4 +96,7 @@ java -jar tinyledger-0.0.1-SNAPSHOT.jar
 
 The application has the following endpoints:
 
-- 
+- **POST** `/api/v1/account` - create an account
+- **GET** `/api/v1/account/{id}/balance` - get the balance of an account
+- **GET** `/api/v1/account/{id}/transaction` - get all transactions for an account
+- **POST** `/api/v1/account/{id}/transaction` - create a transaction for an account
