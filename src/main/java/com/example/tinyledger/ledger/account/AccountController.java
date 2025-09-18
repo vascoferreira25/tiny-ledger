@@ -20,4 +20,9 @@ public class AccountController {
     public ResponseEntity<AccountResponse> createAccount(@RequestBody CreateAccountRequest newAccount) {
         return ResponseEntity.status(HttpStatus.CREATED).body(accountService.createAccount(newAccount));
     }
+
+    @GetMapping("/{id}/balance")
+    public ResponseEntity<AccountResponse> getAccount(@PathVariable Long id) {
+        return ResponseEntity.ok(accountService.getAccountById(id));
+    }
 }

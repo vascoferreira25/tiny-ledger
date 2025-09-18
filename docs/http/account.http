@@ -1,3 +1,5 @@
+@accountId = 1
+
 ### Create an account with 100 of balance
 POST http://localhost:8080/api/v1/account
 Content-Type: application/json
@@ -14,4 +16,7 @@ Content-Type: application/json
   "startingBalance": "-100"
 }
 
+### Check the balance of an account
+GET http://localhost:8080/api/v1/account/{{accountId}}/balance
+Accept: application/json
 
