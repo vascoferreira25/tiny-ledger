@@ -31,8 +31,7 @@ public class AccountService {
             throw new TinyLedgerInvalidArgumentException("Balance must not be negative");
         }
 
-        Account newAccount = new Account();
-        newAccount.setBalance(request.startingBalance);
+        Account newAccount = new Account(request.startingBalance);
         newAccount = accountRepository.save(newAccount);
 
         AccountResponse response = new AccountResponse();

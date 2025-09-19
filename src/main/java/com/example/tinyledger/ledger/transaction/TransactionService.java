@@ -49,10 +49,15 @@ public class TransactionService {
         transaction = transactionRepository.save(transaction);
 
         if (transaction.getTransactionType() == TransactionType.DEPOSIT) {
-            account.setBalance(account.getBalance().add(transaction.getAmount()));
+            account.deposit(transaction.getAmount());
         } else {
-            account.setBalance(account.getBalance().subtract(transaction.getAmount()));
+            account.withdraw(transaction.getAmount());
         }
+
+        // As this method is not transaction (as specified in the assumptions)
+        // in the case this operation fails, transactions will be out of sync
+        // as a solution, this method should be transactional.
+        accountRepository.save(account);
 
         return transactionToResponse(transaction);
     }

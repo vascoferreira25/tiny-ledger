@@ -47,9 +47,8 @@ class AccountServiceTest {
         CreateAccountRequest newAccount = new CreateAccountRequest();
         newAccount.setStartingBalance(BigDecimal.ZERO);
 
-        Account account = new Account();
+        Account account = new Account(BigDecimal.ZERO);
         account.setId(1L);
-        account.setBalance(BigDecimal.ZERO);
 
         // When
         when(accountRepository.save(any())).thenReturn(account);
