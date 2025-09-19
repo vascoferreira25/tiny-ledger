@@ -1,6 +1,7 @@
 package com.example.tinyledger.ledger.transaction;
 
 import com.example.tinyledger.ledger.account.Account;
+import com.example.tinyledger.shared.TinyLedgerInvalidArgumentException;
 
 import java.math.BigDecimal;
 
@@ -33,7 +34,13 @@ public class Transaction {
         return amount;
     }
 
+    private void validateAmount(BigDecimal amount) {
+        if (amount.compareTo(BigDecimal.ZERO) < 0)
+            throw new TinyLedgerInvalidArgumentException("Amount must be equal or greater than zero.");
+    }
+
     public void setAmount(BigDecimal amount) {
+        validateAmount(amount);
         this.amount = amount;
     }
 
