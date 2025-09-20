@@ -2,6 +2,7 @@ package com.example.tinyledger.ledger.account;
 
 import com.example.tinyledger.ledger.account.dto.AccountResponse;
 import com.example.tinyledger.ledger.account.dto.CreateAccountRequest;
+import com.example.tinyledger.ledger.shared.Amount;
 import com.example.tinyledger.shared.TinyLedgerInvalidArgumentException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -37,7 +39,7 @@ class AccountServiceTest {
         // Then
         assertThatExceptionOfType(TinyLedgerInvalidArgumentException.class)
                 .isThrownBy(() -> accountService.createAccount(newAccount))
-                .withMessage("Balance must not be negative");
+                .withMessage("Amount must be equal or greater than zero.");
     }
 
     @Test
@@ -47,7 +49,8 @@ class AccountServiceTest {
         CreateAccountRequest newAccount = new CreateAccountRequest();
         newAccount.setStartingBalance(BigDecimal.ZERO);
 
-        Account account = new Account(BigDecimal.ZERO);
+        Amount amount = new Amount(BigDecimal.ZERO);
+        Account account = new Account(amount);
         account.setId(1L);
 
         // When

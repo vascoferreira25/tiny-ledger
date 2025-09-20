@@ -2,13 +2,11 @@ package com.example.tinyledger.ledger.account;
 
 import com.example.tinyledger.ledger.account.dto.AccountResponse;
 import com.example.tinyledger.ledger.account.dto.CreateAccountRequest;
-import com.example.tinyledger.shared.TinyLedgerInvalidArgumentException;
+import com.example.tinyledger.ledger.shared.Amount;
 import com.example.tinyledger.shared.TinyLedgerNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
 
 @Service
 public class AccountService {
@@ -22,21 +20,19 @@ public class AccountService {
 
     /**
      * Create a new account with the info of the request.
+     *
      * @param request the new account info
      * @return the new account
      * @throws com.example.tinyledger.shared.TinyLedgerInvalidArgumentException when invalid info is submitted
      */
     public AccountResponse createAccount(CreateAccountRequest request) {
-        if (request.getStartingBalance().compareTo(BigDecimal.ZERO) < 0) {
-            throw new TinyLedgerInvalidArgumentException("Balance must not be negative");
-        }
-
-        Account newAccount = new Account(request.startingBalance);
+        Amount amount = new Amount(request.startingBalance);
+        Account newAccount = new Account(amount);
         newAccount = accountRepository.save(newAccount);
 
         AccountResponse response = new AccountResponse();
         response.setId(newAccount.getId());
-        response.setBalance(newAccount.getBalance());
+        response.setBalance(newAccount.getBalance().value());
 
         return response;
     }
@@ -49,7 +45,7 @@ public class AccountService {
 
         AccountResponse response = new AccountResponse();
         response.setId(account.getId());
-        response.setBalance(account.getBalance());
+        response.setBalance(account.getBalance().value());
 
         return response;
     }

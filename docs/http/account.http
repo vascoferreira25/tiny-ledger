@@ -33,6 +33,15 @@ Content-Type: application/json
   "type": "DEPOSIT"
 }
 
+### Try to create new transaction, deposit of -100
+POST http://localhost:8080/api/v1/account/{{accountId}}/transaction
+Content-Type: application/json
+
+{
+  "amount": "-100",
+  "type": "DEPOSIT"
+}
+
 ### Create new transaction, withdrawal of 100
 POST http://localhost:8080/api/v1/account/{{accountId}}/transaction
 Content-Type: application/json

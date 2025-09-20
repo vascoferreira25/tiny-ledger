@@ -1,14 +1,12 @@
 package com.example.tinyledger.ledger.transaction;
 
 import com.example.tinyledger.ledger.account.Account;
-import com.example.tinyledger.shared.TinyLedgerInvalidArgumentException;
-
-import java.math.BigDecimal;
+import com.example.tinyledger.ledger.shared.Amount;
 
 public class Transaction {
     private Long id;
     private Account account;
-    private BigDecimal amount;
+    private Amount amount;
     private TransactionType transactionType;
 
     public Transaction() {
@@ -30,17 +28,11 @@ public class Transaction {
         this.account = account;
     }
 
-    public BigDecimal getAmount() {
+    public Amount getAmount() {
         return amount;
     }
 
-    private void validateAmount(BigDecimal amount) {
-        if (amount.compareTo(BigDecimal.ZERO) < 0)
-            throw new TinyLedgerInvalidArgumentException("Amount must be equal or greater than zero.");
-    }
-
-    public void setAmount(BigDecimal amount) {
-        validateAmount(amount);
+    public void setAmount(Amount amount) {
         this.amount = amount;
     }
 

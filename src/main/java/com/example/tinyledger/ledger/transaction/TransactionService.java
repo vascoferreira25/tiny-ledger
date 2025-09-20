@@ -2,15 +2,14 @@ package com.example.tinyledger.ledger.transaction;
 
 import com.example.tinyledger.ledger.account.Account;
 import com.example.tinyledger.ledger.account.AccountRepository;
+import com.example.tinyledger.ledger.shared.Amount;
 import com.example.tinyledger.ledger.transaction.dto.NewTransactionRequest;
 import com.example.tinyledger.ledger.transaction.dto.TransactionResponse;
-import com.example.tinyledger.shared.TinyLedgerInvalidArgumentException;
 import com.example.tinyledger.shared.TinyLedgerNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -31,20 +30,11 @@ public class TransactionService {
             return new TinyLedgerNotFoundException("Account not found");
         });
 
-        // BigDecimal compareTo returns either -1, 0, or 1
-        if (newTransaction.getAmount().compareTo(BigDecimal.ZERO) < 1) {
-            throw new TinyLedgerInvalidArgumentException("Amount of transaction should be greater than zero.");
-        }
-
-        if (newTransaction.getType() == TransactionType.WITHDRAWAL
-                && newTransaction.getAmount().compareTo(account.getBalance()) > 0) {
-            logger.warn("Account id {} doesn't have enough funds for withdrawing {}", accountId, newTransaction.getAmount());
-            throw new TinyLedgerInvalidArgumentException("Not enough funds on the account.");
-        }
+        Amount amount = new Amount(newTransaction.getAmount());
 
         Transaction transaction = new Transaction();
         transaction.setAccount(account);
-        transaction.setAmount(newTransaction.getAmount());
+        transaction.setAmount(amount);
         transaction.setTransactionType(newTransaction.getType());
         transaction = transactionRepository.save(transaction);
 
@@ -54,9 +44,9 @@ public class TransactionService {
             account.withdraw(transaction.getAmount());
         }
 
-        // As this method is not transaction (as specified in the assumptions)
-        // in the case this operation fails, transactions will be out of sync
-        // as a solution, this method should be transactional.
+        // As this method does not run in a (DB) transaction (as specified in the assumptions),
+        // in the case this operation fails, transactions will be out of sync with the account.
+        // As a solution, this method should be @Transactional.
         accountRepository.save(account);
 
         return transactionToResponse(transaction);
@@ -65,7 +55,7 @@ public class TransactionService {
     private TransactionResponse transactionToResponse(Transaction transaction) {
         TransactionResponse response = new TransactionResponse();
         response.setId(transaction.getId());
-        response.setAmount(transaction.getAmount());
+        response.setAmount(transaction.getAmount().value());
         response.setType(transaction.getTransactionType());
         return response;
     }
